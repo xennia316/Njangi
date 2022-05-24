@@ -5,10 +5,11 @@
  */
 package com.njangi;
 
+import com.njangi.backend.Join_api;
 import com.njangi.statics.ImagePath;
 import java.awt.Color;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 /**
  *
@@ -250,6 +251,23 @@ public class Join extends javax.swing.JFrame implements ImagePath{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String njangiName = jTextField1.getText();
+        String code = jTextField2.getText();
+        String userName = jTextField3.getText();
+        String email = jTextField4.getText();
+        String password = jTextField5.getText();
+        String confirmPass = jTextField6.getText();
+        String userID = "2012";
+
+        if(password.equals(confirmPass)) {
+            int result = Join_api.addMember(njangiName, userName, code, userID, email, password);
+            if(result < 2){
+                JOptionPane.showMessageDialog(null,"Error:: User Not created");
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"User Created Successfully\nUserId: "+userID);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
