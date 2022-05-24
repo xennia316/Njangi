@@ -5,6 +5,9 @@
  */
 package com.njangi;
 
+import com.njangi.backend.Login_api;
+
+import javax.swing.*;
 import java.awt.Color;
 
 /**
@@ -185,6 +188,17 @@ public class Login extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        String userCode = jTextField1.getText();
+        String njangiCode = jTextField2.getText();
+        String password = String.valueOf(jPasswordField1.getPassword());
+        int result = Login_api.login(userCode, njangiCode, password);
+
+        if(result < 1){
+            JOptionPane.showMessageDialog(null,"Error:: User does not exist");
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"User logged in successfully");
+        }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
