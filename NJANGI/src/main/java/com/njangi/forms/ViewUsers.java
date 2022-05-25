@@ -5,6 +5,14 @@
  */
 package com.njangi.forms;
 
+import com.njangi.backend.Admin_api;
+import com.njangi.backend.User_api;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,10 +22,39 @@ public class ViewUsers extends javax.swing.JPanel {
     /**
      * Creates new form ViewUsers
      */
-    public ViewUsers() {
+    private String njangiCode;
+    
+    public ViewUsers(String s) {
+        this.njangiCode = s;
         initComponents();
+        initTable();
     }
 
+    
+    public void initTable() {
+        try {
+            ResultSet rs = User_api.getMembers(njangiCode);
+            ResultSetMetaData Rss = rs.getMetaData();
+            int c = Rss.getColumnCount();
+
+            DefaultTableModel Df = (DefaultTableModel) table1.getModel();
+            Df.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+
+                for (int a = 1; a <= c; a++) {
+                    v.add(rs.getString("account_id"));
+                    v.add(rs.getString("user_name"));
+                    v.add(rs.getString("user_email"));
+                }
+
+                Df.addRow(v);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error:: " + ex.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

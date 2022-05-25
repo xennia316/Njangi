@@ -5,6 +5,17 @@
  */
 package com.njangi.forms;
 
+import com.njangi.backend.Admin_api;
+import com.njangi.backend.User_api;
+import com.njangi.models.Admin;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,10 +25,64 @@ public class ApproveLoan extends javax.swing.JPanel {
     /**
      * Creates new form ApproveLoan
      */
-    public ApproveLoan() {
+    private Admin njangiAdmin;
+    public ApproveLoan(Admin n) {
+        this.njangiAdmin = n;
         initComponents();
+        initTable();
     }
 
+    
+    public void initTable() {
+        try {
+            ResultSet rs = Admin_api.getLoanRequest(njangiAdmin.getNjangiCode());
+            ResultSetMetaData Rss = rs.getMetaData();
+            int c = Rss.getColumnCount();
+
+            DefaultTableModel Df = (DefaultTableModel) table1.getModel();
+            Df.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+
+                for (int a = 1; a <= c; a++) {
+                    v.add(rs.getString("account_id"));
+                    v.add(rs.getString("account_name"));
+                    v.add(rs.getString("shortie_id"));
+                    v.add(rs.getString("shortie_name"));
+                    v.add(rs.getString("njangi_code"));
+                    v.add(rs.getInt("loan_amount"));
+                }
+
+                Df.addRow(v);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error:: " + ex.getMessage());
+        }
+    }
+    
+    public void approveLoan(){
+       DefaultTableModel Df = (DefaultTableModel) table1.getModel();
+       int selectedIndex = table1.getSelectedRow();
+       
+       if(selectedIndex < 0){
+           JOptionPane.showMessageDialog(this, "Please Select a Member","Error",ERROR_MESSAGE);
+           return;
+       }
+       String msg = "Are you sure you wish to Approve this Loan?";
+       int confirm = JOptionPane.showConfirmDialog(this,msg, "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+       if(confirm == 0){
+           String user_id = Df.getValueAt(selectedIndex, 0).toString();
+           int result = Admin_api.approveLoan(user_id, njangiAdmin.getNjangiCode());
+           if(result > 0){
+               JOptionPane.showMessageDialog(null, "Loan Approved", "Approval", JOptionPane.INFORMATION_MESSAGE);
+               initTable();
+           }
+           else{
+               JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+       }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

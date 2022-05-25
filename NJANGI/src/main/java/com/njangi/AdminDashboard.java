@@ -11,32 +11,39 @@ import com.njangi.forms.ApproveMember;
 import com.njangi.forms.RecoverLoan;
 import com.njangi.forms.RemoveMember;
 import com.njangi.forms.UserProfile;
-import com.njangi.statics.ImagePath;
+import com.njangi.models.Admin;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import com.njangi.statics.Path;
 
 /**
  *
  * @author Admin
  */
-public class AdminDashboard extends javax.swing.JFrame implements ImagePath {
+public class AdminDashboard extends javax.swing.JFrame implements Path{
 
-
+    private Admin njangiAdmin;
     /*Menu Items*/
     //Profile
     //Borrow
     //Contribute
     //View All members
     
-    public AdminDashboard() {
+    public AdminDashboard(Admin ad) {
+        this.njangiAdmin = ad;
         initComponents();
         setBackground(new Color(0,0,0,0));
         init();
         initIcons();
-        setForm(new AdminProfile());
+    }
+    
+    private void setHome(){
+        AdminProfile adProfile = new AdminProfile();
+        adProfile.setData(njangiAdmin.getNjangiCode(), njangiAdmin.getMemberCount(), njangiAdmin.getNjangiName());
+        setForm(adProfile);
     }
     
     private void setForm(JComponent com){
@@ -51,7 +58,13 @@ public class AdminDashboard extends javax.swing.JFrame implements ImagePath {
         initMenu();
         initIcons();
         initLogo();
-        setForm(new UserProfile());
+        initHeader();
+        setHome();
+        
+    }
+    
+    public void initHeader(){
+        header1.setData(njangiAdmin.getNjangiName(), "Admin");
     }
     
     public final void initMenu(){
@@ -429,31 +442,30 @@ public class AdminDashboard extends javax.swing.JFrame implements ImagePath {
 
     private void lb_profile_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_profile_textMouseClicked
         // TODO add your handling code here:
-        AdminProfile form = new AdminProfile();
-        setForm(form);
+        setHome();
     }//GEN-LAST:event_lb_profile_textMouseClicked
 
     private void lb_borrow_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_borrow_textMouseClicked
         // TODO add your handling code here:
-        ApproveLoan b_form = new ApproveLoan();
+        ApproveLoan b_form = new ApproveLoan(njangiAdmin);
         setForm(b_form);
     }//GEN-LAST:event_lb_borrow_textMouseClicked
 
     private void lb_contribute_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_contribute_textMouseClicked
         // TODO add your handling code here:
-        RecoverLoan c_form = new RecoverLoan();
+        RecoverLoan c_form = new RecoverLoan(njangiAdmin);
         setForm(c_form);
     }//GEN-LAST:event_lb_contribute_textMouseClicked
 
     private void lb_view_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_view_textMouseClicked
         // TODO add your handling code here:
-        ApproveMember v_form = new ApproveMember();
+        ApproveMember v_form = new ApproveMember(njangiAdmin);
         setForm(v_form);
     }//GEN-LAST:event_lb_view_textMouseClicked
 
     private void lb_new_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_new_textMouseClicked
         // TODO add your handling code here:
-        RemoveMember r_form = new RemoveMember();
+        RemoveMember r_form = new RemoveMember(njangiAdmin);
         setForm(r_form);
         
     }//GEN-LAST:event_lb_new_textMouseClicked
@@ -479,38 +491,6 @@ public class AdminDashboard extends javax.swing.JFrame implements ImagePath {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdminDashboard().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.njangi.extra.Header header1;

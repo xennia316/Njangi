@@ -5,32 +5,55 @@
  */
 package com.njangi;
 
+import com.njangi.backend.Join_api;
+import com.njangi.statics.Path;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
  *
  * @author Admin
  */
-public class Welcome extends javax.swing.JFrame {
+public class Welcome extends javax.swing.JFrame implements Path {
 
-    private final String prefix = "C:\\Users\\Admin\\Documents\\NetBeansProjects\\NJANGI\\NJANGI\\src\\main\\java\\com.njangi.images\\";
     /**
      * Creates new form Welcome
      */
     public Welcome() {
         initComponents();
-        setBackground(new Color(0,0,0,0));
+        setBackground(new Color(0, 0, 0, 0));
         init();
     }
 
-    public final void init(){
-        ImageIcon ic = new ImageIcon(prefix+"money.png");
-        Image scaledImg = ic.getImage().getScaledInstance(227,221,java.awt.Image.SCALE_SMOOTH);
+    public final void init() {
+        ImageIcon ic = new ImageIcon(PREFIX + "money.png");
+        Image scaledImg = ic.getImage().getScaledInstance(227, 221, java.awt.Image.SCALE_SMOOTH);
         ic = new ImageIcon(scaledImg);
         lb_icon.setIcon(ic);
     }
+
+    public static boolean isNull(String n) {
+        if (n.length() < 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static String getId(String id) {
+        Random rand = new Random();
+        id = id.substring(0, 2);
+        Number num = rand.nextInt(100);
+        id = id + num.toString();
+
+        return id;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,22 +65,22 @@ public class Welcome extends javax.swing.JFrame {
 
         panelBorder1 = new com.njangi.PanelBorder();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         pnText = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btn_join = new javax.swing.JButton();
+        btn_login = new javax.swing.JButton();
         lb_icon = new javax.swing.JLabel();
+        btn_adminLogin = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        in_njangiName = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btn_submit = new javax.swing.JButton();
+        in_password = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(214, 76, 76));
         setBounds(panelBorder1.getVisibleRect());
         setUndecorated(true);
@@ -82,10 +105,6 @@ public class Welcome extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Courier New", 3, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("NJANGI MS");
-
         pnText.setBackground(new java.awt.Color(94, 84, 142));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 48)); // NOI18N
@@ -100,26 +119,37 @@ public class Welcome extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("NJANGI");
 
-        jButton3.setBackground(new java.awt.Color(94, 84, 142));
-        jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Join Njangi");
-        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 3, true));
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_join.setBackground(new java.awt.Color(94, 84, 142));
+        btn_join.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btn_join.setForeground(new java.awt.Color(255, 255, 255));
+        btn_join.setText("Join Njangi");
+        btn_join.setBorder(null);
+        btn_join.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_join.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_joinActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(94, 84, 142));
-        jButton4.setText("Login");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btn_login.setBackground(new java.awt.Color(255, 255, 255));
+        btn_login.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btn_login.setForeground(new java.awt.Color(94, 84, 142));
+        btn_login.setText("Login");
+        btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btn_loginActionPerformed(evt);
+            }
+        });
+
+        btn_adminLogin.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btn_adminLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btn_adminLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btn_adminLogin.setText("Login As Admin");
+        btn_adminLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_adminLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_adminLoginMouseClicked(evt);
             }
         });
 
@@ -131,27 +161,35 @@ public class Welcome extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(pnTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnTextLayout.createSequentialGroup()
-                        .addGroup(pnTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnTextLayout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(122, Short.MAX_VALUE))
-                    .addGroup(pnTextLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lb_icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(lb_icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnTextLayout.createSequentialGroup()
+                        .addGroup(pnTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnTextLayout.createSequentialGroup()
+                                .addGroup(pnTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 112, Short.MAX_VALUE))
+                            .addGroup(pnTextLayout.createSequentialGroup()
+                                .addComponent(btn_join, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_login)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_adminLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         pnTextLayout.setVerticalGroup(
             pnTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTextLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(pnTextLayout.createSequentialGroup()
+                        .addComponent(btn_login)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btn_adminLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_join, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,30 +200,26 @@ public class Welcome extends javax.swing.JFrame {
                     .addGroup(pnTextLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(lb_icon, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Symbol", 1, 36)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel5.setText("Create A Njangi");
 
-        jLabel6.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel6.setText("Name");
 
-        jTextField1.setText("jTextField1");
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel7.setText("Password");
 
-        jTextField2.setText("jTextField1");
-
-        jLabel7.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jLabel7.setText("Amount");
-
-        jButton2.setBackground(new java.awt.Color(94, 84, 142));
-        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Create Njangi");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_submit.setBackground(new java.awt.Color(94, 84, 142));
+        btn_submit.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btn_submit.setForeground(new java.awt.Color(255, 255, 255));
+        btn_submit.setText("Create Njangi");
+        btn_submit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_submitActionPerformed(evt);
             }
         });
 
@@ -195,8 +229,6 @@ public class Welcome extends javax.swing.JFrame {
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(282, 282, 282)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
             .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -204,13 +236,13 @@ public class Welcome extends javax.swing.JFrame {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                            .addComponent(in_njangiName)
+                            .addComponent(in_password))
                         .addGap(41, 41, 41))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -220,9 +252,7 @@ public class Welcome extends javax.swing.JFrame {
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton1)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
@@ -230,13 +260,13 @@ public class Welcome extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(in_njangiName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(in_password, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pnText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -269,23 +299,45 @@ public class Welcome extends javax.swing.JFrame {
 
     private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
         // TODO add your handling code here:
-        jButton1.setBackground(new java.awt.Color(255,255,255));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jButton1MouseExited
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String njangiName = in_njangiName.getText();
+        String password = String.valueOf(in_password.getPassword());
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (isNull(njangiName) || isNull(password)) {
+            JOptionPane.showMessageDialog(null, "Please Fill All Fields", "Invalid Data", ERROR_MESSAGE);
+        } else {
+            String njangiCode = getId(njangiName);
+            int res = Join_api.addNjangi(njangiName, njangiCode, password);
+            if (res > 0) {
+                String msg = "Njangi Created Successfully\n" + "Your Njangi Code: " + njangiCode;
+                JOptionPane.showMessageDialog(null, msg, "Success", INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Njangi Not Created", "An Error Occured", ERROR_MESSAGE);
+            }
+        }
+        in_njangiName.setText("");
+        in_password.setText("");
+    }//GEN-LAST:event_btn_submitActionPerformed
+
+    private void btn_joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_joinActionPerformed
         // TODO add your handling code here:
         new Join().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btn_joinActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
-        new Login().setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+        new Login(this).setVisible(true);
+    }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void btn_adminLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_adminLoginMouseClicked
+        // TODO add your handling code here:
+        new AdminLogin(this).setVisible(true);
+    }//GEN-LAST:event_btn_adminLoginMouseClicked
 
     /**
      * @param args the command line arguments
@@ -323,19 +375,19 @@ public class Welcome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btn_adminLogin;
+    private javax.swing.JButton btn_join;
+    private javax.swing.JButton btn_login;
+    private javax.swing.JButton btn_submit;
+    private javax.swing.JTextField in_njangiName;
+    private javax.swing.JPasswordField in_password;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lb_icon;
     private com.njangi.PanelBorder panelBorder1;
     private javax.swing.JPanel pnText;

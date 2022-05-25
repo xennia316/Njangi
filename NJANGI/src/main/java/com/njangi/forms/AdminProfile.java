@@ -5,16 +5,16 @@
  */
 package com.njangi.forms;
 
-import com.njangi.statics.ImagePath;
-import static com.njangi.statics.ImagePath.PREFIX;
+import static com.njangi.statics.Path.PREFIX;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import com.njangi.statics.Path;
 
 /**
  *
  * @author Admin
  */
-public class AdminProfile extends javax.swing.JPanel implements ImagePath {
+public class AdminProfile extends javax.swing.JPanel implements Path {
 
     /**
      * Creates new form UserProfile
@@ -29,6 +29,12 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
         Image scaledImg = ic.getImage().getScaledInstance(340, 340, java.awt.Image.SCALE_SMOOTH);
         ic = new ImageIcon(scaledImg);
         lb_icon.setIcon(ic);
+    }
+    
+    public void setData(String njangiCode, String njangiMembers, String njangiName){
+        lb_njangiCode.setText(njangiCode);
+        lb_njangiMembers.setText(njangiMembers);
+        in_njangiName.setText(njangiName);
     }
 
     /**
@@ -50,12 +56,11 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
         jLabel5 = new javax.swing.JLabel();
         in_cfmPassword = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lb_njangiMembers = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lb_njangiCode = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         btn_submit = new javax.swing.JButton();
-        jLabel21 = new javax.swing.JLabel();
         lb_icon = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -77,14 +82,14 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel7.setText("Njangi Code");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setText("###");
+        lb_njangiMembers.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lb_njangiMembers.setText("###");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setText("Members");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel11.setText("###");
+        lb_njangiCode.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lb_njangiCode.setText("###");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel12.setText("Number of Members");
@@ -93,9 +98,6 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
         btn_submit.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         btn_submit.setText("Update");
         btn_submit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 0, 14)); // NOI18N
-        jLabel21.setText("##UID");
 
         javax.swing.GroupLayout curvesPanel1Layout = new javax.swing.GroupLayout(curvesPanel1);
         curvesPanel1.setLayout(curvesPanel1Layout);
@@ -107,10 +109,9 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
                     .addGroup(curvesPanel1Layout.createSequentialGroup()
                         .addGroup(curvesPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)
                             .addGroup(curvesPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lb_njangiMembers, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(in_password, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,14 +120,12 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
                             .addComponent(in_cfmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(in_njangiName, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_njangiCode, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(57, 57, 57)
                         .addComponent(lb_icon, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(curvesPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(curvesPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(34, 34, 34)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lb_separator, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -134,9 +133,7 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
             curvesPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(curvesPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(curvesPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_separator, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -144,12 +141,12 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
                     .addGroup(curvesPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)
+                        .addComponent(lb_njangiCode)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(curvesPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
+                            .addComponent(lb_njangiMembers)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,15 +189,14 @@ public class AdminProfile extends javax.swing.JPanel implements ImagePath {
     private javax.swing.JTextField in_password;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lb_icon;
+    private javax.swing.JLabel lb_njangiCode;
+    private javax.swing.JLabel lb_njangiMembers;
     private javax.swing.JLabel lb_separator;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,18 @@
  */
 package com.njangi.forms;
 
+import com.njangi.backend.Admin_api;
+import com.njangi.models.Admin;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,8 +26,61 @@ public class ApproveMember extends javax.swing.JPanel {
     /**
      * Creates new form RecoverLoan
      */
-    public ApproveMember() {
+    private Admin njangiAdmin;
+
+    public ApproveMember(Admin ad) {
+        this.njangiAdmin = ad;
         initComponents();
+        initTable();
+    }
+
+    public void initTable() {
+        try {
+            ResultSet rs = Admin_api.getMemberRequest(njangiAdmin.getNjangiCode());
+            ResultSetMetaData Rss = rs.getMetaData();
+            int c = Rss.getColumnCount();
+
+            DefaultTableModel Df = (DefaultTableModel) table1.getModel();
+            Df.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+
+                for (int a = 1; a <= c; a++) {
+                    v.add(rs.getString("user_id"));
+                    v.add(rs.getString("user_name"));
+                }
+
+                Df.addRow(v);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error:: " + ex.getMessage());
+        }
+    }
+    
+    public void addMember(){
+       DefaultTableModel Df = (DefaultTableModel) table1.getModel();
+       int selectedIndex = table1.getSelectedRow();
+       
+       if(selectedIndex < 0){
+           JOptionPane.showMessageDialog(this, "Please Select a Member","Error",ERROR_MESSAGE);
+           return;
+       }
+       String msg = "Are you sure you wish to Approve this user?";
+       int confirm = JOptionPane.showConfirmDialog(this,msg, "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+       if(confirm == 0){
+           String user_id = Df.getValueAt(selectedIndex, 0).toString();
+           int result = Admin_api.addMember(user_id, njangiAdmin.getNjangiCode());
+           if(result > 0){
+               JOptionPane.showMessageDialog(null, "User Approved", "Approval", JOptionPane.INFORMATION_MESSAGE);
+               initTable();
+           }
+           else{
+               JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+       }
+       
+        
     }
 
     /**
@@ -113,12 +178,13 @@ public class ApproveMember extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(curvesPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(curvesPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
         // TODO add your handling code here:
+        addMember();
     }//GEN-LAST:event_btn_submitActionPerformed
 
 

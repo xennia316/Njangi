@@ -5,17 +5,14 @@
  */
 package com.njangi;
 
+import com.njangi.backend.Join_api;
 import com.njangi.backend.Login_api;
 import com.njangi.models.User;
 
 import javax.swing.*;
 import java.awt.Color;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
@@ -23,14 +20,14 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  *
  * @author Admin
  */
-public class Login extends javax.swing.JFrame {
+public class JoinNjangi extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
     private JFrame parent;
     
-    public Login(JFrame j) {
+    public JoinNjangi(JFrame j) {
         this.parent = j;
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
@@ -52,8 +49,6 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         in_userId = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        in_password = new javax.swing.JPasswordField();
         btn_submit = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         in_njangiCode = new javax.swing.JTextField();
@@ -81,7 +76,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 22)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Login");
+        jLabel2.setText("Join Njangi");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel3.setText("UserId");
@@ -89,15 +84,6 @@ public class Login extends javax.swing.JFrame {
         in_userId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 in_userIdActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel4.setText("Password");
-
-        in_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                in_passwordActionPerformed(evt);
             }
         });
 
@@ -125,17 +111,11 @@ public class Login extends javax.swing.JFrame {
         loginBorder1.setLayout(loginBorder1Layout);
         loginBorder1Layout.setHorizontalGroup(
             loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginBorder1Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBorder1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(in_password, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                    .addComponent(in_userId)
+                    .addComponent(in_userId, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(in_njangiCode))
                 .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,14 +126,18 @@ public class Login extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 17, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBorder1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(117, 117, 117))
         );
         loginBorder1Layout.setVerticalGroup(
             loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginBorder1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
@@ -161,14 +145,10 @@ public class Login extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(in_njangiCode, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(in_njangiCode, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(loginBorder1Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
+                        .addGap(111, 111, 111)
                         .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(2, 2, 2)
-                .addComponent(in_password, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -187,7 +167,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                 .addContainerGap(139, Short.MAX_VALUE)
                 .addComponent(loginBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120))
+                .addGap(185, 185, 185))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -219,40 +199,20 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_in_njangiCodeActionPerformed
 
-    private void in_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_in_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_in_passwordActionPerformed
-
     private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
         // TODO add your handling code here:
         String userCode = in_userId.getText();
         String njangiCode = in_njangiCode.getText();
-        String password = String.valueOf(in_password.getPassword());
-        ResultSet result = Login_api.loginUser(userCode, njangiCode, password);
+        int result = Join_api.joinNjangi(userCode, njangiCode);
 
-        try {
-            if (result.next()) {
-                JOptionPane.showMessageDialog(null, "User logged in successfully");
-                User user = new User(result.getString("user_id"),result.getString("user_name"),result.getString("user_email"),result.getString("njangi_code"),result.getInt("current_amount"));
-                new UserDashboard(user).setVisible(true);
-                parent.dispose();
-                this.dispose();
-            } else {
-                try{
-                    result = Login_api.checkRequestStatus(userCode, password);
-                    if(result.next()){
-                        String msg = "Your Njangi Request Status is: " + result.getString("curr_status")+""
-                                + "\nPlease try again later";
-                        JOptionPane.showMessageDialog(null, msg, "Request Status", INFORMATION_MESSAGE);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "User does not exist","Invalid Credentials",ERROR_MESSAGE);
-                    }
-                }catch(SQLException ex){
-                    System.out.println("Error::: "+ex.getMessage());
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error::: "+ex.getMessage());
+        if (result >  0) {
+            JOptionPane.showMessageDialog(null, "Join Request Submitted ","Success",INFORMATION_MESSAGE);
+            this.dispose();
+        } else if(result == -1) {
+            JOptionPane.showMessageDialog(null, "Njangi Not Found","Database Error",ERROR_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Process Not Successful","Failure",ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_submitActionPerformed
 
@@ -264,12 +224,10 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_submit;
     private javax.swing.JTextField in_njangiCode;
-    private javax.swing.JPasswordField in_password;
     private javax.swing.JTextField in_userId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private com.njangi.LoginBorder loginBorder1;
     private com.njangi.PanelBorder panelBorder1;

@@ -5,6 +5,16 @@
  */
 package com.njangi.forms;
 
+import com.njangi.backend.Admin_api;
+import com.njangi.models.Admin;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,10 +24,63 @@ public class RecoverLoan extends javax.swing.JPanel {
     /**
      * Creates new form RecoverLoan
      */
-    public RecoverLoan() {
+    private Admin njangiAdmin;
+    public RecoverLoan(Admin n) {
+        this.njangiAdmin = n;
         initComponents();
+        initTable();
     }
 
+    
+    public void initTable() {
+        try {
+            ResultSet rs = Admin_api.getCurrentLoans(njangiAdmin.getNjangiCode());
+            ResultSetMetaData Rss = rs.getMetaData();
+            int c = Rss.getColumnCount();
+
+            DefaultTableModel Df = (DefaultTableModel) table1.getModel();
+            Df.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+
+                for (int a = 1; a <= c; a++) {
+                    v.add(rs.getString("account_id"));
+                    v.add(rs.getString("account_name"));
+                    v.add(rs.getInt("loan_amount"));
+                }
+
+                Df.addRow(v);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error:: " + ex.getMessage());
+        }
+    }
+    
+    public void recover(){
+       DefaultTableModel Df = (DefaultTableModel) table1.getModel();
+       int selectedIndex = table1.getSelectedRow();
+       
+       if(selectedIndex < 0){
+           JOptionPane.showMessageDialog(this, "Please Select a Loan To Recover","Error",ERROR_MESSAGE);
+           return;
+       }
+       String msg = "Are you sure you wish to Recover this loan?";
+       int confirm = JOptionPane.showConfirmDialog(this,msg, "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+       if(confirm == 0){
+           String user_id = Df.getValueAt(selectedIndex, 0).toString();
+           int result = Admin_api.recoverLoan(user_id, njangiAdmin.getNjangiCode());
+           if(result > 0){
+               JOptionPane.showMessageDialog(null, "Loan Recovered", "Approval", JOptionPane.INFORMATION_MESSAGE);
+               initTable();
+           }
+           else{
+               JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+       }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,6 +182,8 @@ public class RecoverLoan extends javax.swing.JPanel {
 
     private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
         // TODO add your handling code here:
+        recover();
+        
     }//GEN-LAST:event_btn_submitActionPerformed
 
 

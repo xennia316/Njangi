@@ -9,31 +9,33 @@ import com.njangi.forms.Borrow;
 import com.njangi.forms.Contribute;
 import com.njangi.forms.UserProfile;
 import com.njangi.forms.ViewUsers;
-import com.njangi.statics.ImagePath;
+import com.njangi.models.User;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import com.njangi.statics.Path;
 
 /**
  *
  * @author Admin
  */
-public class UserDashboard extends javax.swing.JFrame implements ImagePath {
-
-
-    /*Menu Items*/
-    //Profile
-    //Borrow
-    //Contribute
-    //View All members
+public class UserDashboard extends javax.swing.JFrame implements Path {
+   
+    private User njangiUser;
     
-    public UserDashboard() {
+    public UserDashboard(User u) {
+        this.njangiUser = u;
         initComponents();
         setBackground(new Color(0,0,0,0));
         init();
         initIcons();
+        initHeader();
+    }
+    
+    public void initHeader(){
+        header1.setData(njangiUser.getUserName(), "User");
     }
     
     private void setForm(JComponent com){
@@ -43,12 +45,17 @@ public class UserDashboard extends javax.swing.JFrame implements ImagePath {
         pn_main.revalidate();
     }
     
+    private void setHome(){
+        UserProfile uProfile = new UserProfile(njangiUser);
+        setForm(uProfile);
+    }
+    
     public final void init(){
         setBackground(new Color(0,0,0,0));
         initMenu();
         initIcons();
         initLogo();
-        setForm(new UserProfile());
+        setHome();
     }
     
     public final void initMenu(){
@@ -116,6 +123,7 @@ public class UserDashboard extends javax.swing.JFrame implements ImagePath {
         lb_view = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         pn_main = new javax.swing.JPanel();
+        header1 = new com.njangi.extra.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -255,7 +263,7 @@ public class UserDashboard extends javax.swing.JFrame implements ImagePath {
                 .addGroup(sidebar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lb_view, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_view_text, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 305, Short.MAX_VALUE))
         );
 
         jButton1.setBackground(new java.awt.Color(94, 84, 142));
@@ -282,17 +290,21 @@ public class UserDashboard extends javax.swing.JFrame implements ImagePath {
                 .addGap(0, 0, 0)
                 .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginBorder1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(pn_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                        .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addContainerGap())
+                    .addComponent(pn_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         loginBorder1Layout.setVerticalGroup(
             loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sidebar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(loginBorder1Layout.createSequentialGroup()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(loginBorder1Layout.createSequentialGroup()
+                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
                 .addComponent(pn_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -390,64 +402,30 @@ public class UserDashboard extends javax.swing.JFrame implements ImagePath {
 
     private void lb_profile_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_profile_textMouseClicked
         // TODO add your handling code here:
-        UserProfile form = new UserProfile();
-        setForm(form);
+        setHome();
     }//GEN-LAST:event_lb_profile_textMouseClicked
 
     private void lb_borrow_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_borrow_textMouseClicked
         // TODO add your handling code here:
-        Borrow b_form = new Borrow();
+        Borrow b_form = new Borrow(njangiUser);
         setForm(b_form);
     }//GEN-LAST:event_lb_borrow_textMouseClicked
 
     private void lb_contribute_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_contribute_textMouseClicked
         // TODO add your handling code here:
-        Contribute c_form = new Contribute();
+        Contribute c_form = new Contribute(njangiUser);
         setForm(c_form);
     }//GEN-LAST:event_lb_contribute_textMouseClicked
 
     private void lb_view_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_view_textMouseClicked
         // TODO add your handling code here:
-        ViewUsers v_form = new ViewUsers();
+        ViewUsers v_form = new ViewUsers(njangiUser.getNjangiCode());
         setForm(v_form);
     }//GEN-LAST:event_lb_view_textMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UserDashboard().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.njangi.extra.Header header1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
