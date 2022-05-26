@@ -6,12 +6,10 @@
 package com.njangi;
 
 import com.njangi.backend.Login_api;
-import com.njangi.models.User;
+import com.njangi.models.Admin;
 
 import javax.swing.*;
 import java.awt.Color;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,20 +21,19 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  *
  * @author Admin
  */
-public class Login extends javax.swing.JFrame {
+public class AdminLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
     private JFrame parent;
     
-    public Login(JFrame j) {
+    public AdminLogin(JFrame j) {
         this.parent = j;
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,8 +47,6 @@ public class Login extends javax.swing.JFrame {
         loginBorder1 = new com.njangi.LoginBorder();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        in_userId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         in_password = new javax.swing.JPasswordField();
         btn_submit = new javax.swing.JButton();
@@ -61,10 +56,9 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
         setUndecorated(true);
-        setType(java.awt.Window.Type.POPUP);
 
         panelBorder1.setBackground(new java.awt.Color(102, 102, 102,70));
-        panelBorder1.setPreferredSize(new java.awt.Dimension(871, 528));
+        panelBorder1.setPreferredSize(new java.awt.Dimension(875, 530));
 
         loginBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -81,16 +75,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 22)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Login");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel3.setText("UserId");
-
-        in_userId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                in_userIdActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Admin Login");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel4.setText("Password");
@@ -125,16 +110,10 @@ public class Login extends javax.swing.JFrame {
         loginBorder1.setLayout(loginBorder1Layout);
         loginBorder1Layout.setHorizontalGroup(
             loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginBorder1Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBorder1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(in_password, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                    .addComponent(in_userId)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(in_njangiCode))
@@ -143,21 +122,21 @@ public class Login extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBorder1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 17, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(loginBorder1Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(jLabel2)
+                .addGap(0, 103, Short.MAX_VALUE))
         );
         loginBorder1Layout.setVerticalGroup(
             loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginBorder1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(in_userId, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
@@ -165,7 +144,7 @@ public class Login extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(loginBorder1Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
+                        .addGap(111, 111, 111)
                         .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(2, 2, 2)
                 .addComponent(in_password, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,37 +157,36 @@ public class Login extends javax.swing.JFrame {
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGap(252, 252, 252)
+                .addGap(255, 255, 255)
                 .addComponent(loginBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                .addContainerGap(139, Short.MAX_VALUE)
+            .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addGap(156, 156, 156)
                 .addComponent(loginBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void in_userIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_in_userIdActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_in_userIdActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
@@ -225,34 +203,22 @@ public class Login extends javax.swing.JFrame {
 
     private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
         // TODO add your handling code here:
-        String userCode = in_userId.getText();
         String njangiCode = in_njangiCode.getText();
         String password = String.valueOf(in_password.getPassword());
-        ResultSet result = Login_api.loginUser(userCode, njangiCode, password);
+        ResultSet result = Login_api.loginAdmin(njangiCode, password);
 
         try {
             if (result.next()) {
-                JOptionPane.showMessageDialog(null, "User logged in successfully");
-                User user = new User(result.getString("user_id"),result.getString("user_name"),result.getString("user_email"),result.getString("njangi_code"),result.getInt("current_amount"));
-                new UserDashboard(user).setVisible(true);
+                JOptionPane.showMessageDialog(null, "Admin logged in", "Success", INFORMATION_MESSAGE);
+                Admin ad = new Admin(result.getString("njangi_code"),result.getString("njangi_name"));
+                new AdminDashboard(ad).setVisible(true);
                 parent.dispose();
                 this.dispose();
             } else {
-                try{
-                    result = Login_api.checkRequestStatus(userCode, password);
-                    if(result.next()){
-                        String msg = "Your Njangi Request Status is: " + result.getString("curr_status")+""
-                                + "\nPlease try again later";
-                        JOptionPane.showMessageDialog(null, msg, "Request Status", INFORMATION_MESSAGE);
-                    }else{
-                        JOptionPane.showMessageDialog(null, "User does not exist","Invalid Credentials",ERROR_MESSAGE);
-                    }
-                }catch(SQLException ex){
-                    System.out.println("Error::: "+ex.getMessage());
-                }
+                JOptionPane.showMessageDialog(null, "Admin does not exist", "Error", ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
-            System.out.println("Error::: "+ex.getMessage());
+            Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_submitActionPerformed
 
@@ -260,15 +226,12 @@ public class Login extends javax.swing.JFrame {
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_submit;
     private javax.swing.JTextField in_njangiCode;
     private javax.swing.JPasswordField in_password;
-    private javax.swing.JTextField in_userId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private com.njangi.LoginBorder loginBorder1;

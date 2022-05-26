@@ -5,23 +5,31 @@
  */
 package com.njangi.forms;
 
-import com.njangi.statics.ImagePath;
+import com.njangi.models.User;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import com.njangi.statics.Path;
 
 /**
  *
  * @author Admin
  */
-public class Contribute extends javax.swing.JPanel implements ImagePath {
+public class Contribute extends javax.swing.JPanel implements Path {
     /**
      * Creates new form Contribute
      */
-    public Contribute() {
+    private User njangiUser;
+    
+    public Contribute(User u) {
+        this.njangiUser = u;
         initComponents();
-        initIcon();
+        init();
     }
 
+    private void init(){
+        initIcon();
+        lb_balance.setText(String.valueOf(njangiUser.getCurrAmount()));
+    }
     
     public final void initIcon(){
         ImageIcon ic = new ImageIcon(PREFIX+"deposit.png");
@@ -42,7 +50,7 @@ public class Contribute extends javax.swing.JPanel implements ImagePath {
         jLabel1 = new javax.swing.JLabel();
         lb_separator = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        lb_balance = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -58,16 +66,14 @@ public class Contribute extends javax.swing.JPanel implements ImagePath {
         jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel8.setText("Current Balance");
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel13.setText("###");
+        lb_balance.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lb_balance.setText("###");
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setText("XAF");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel2.setText("Amount");
-
-        jTextField1.setText("jTextField1");
 
         jButton1.setBackground(new java.awt.Color(94, 84, 142));
         jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -98,9 +104,9 @@ public class Contribute extends javax.swing.JPanel implements ImagePath {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(curvesPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(curvesPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lb_balance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel14))
                                 .addComponent(jLabel8))
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(curvesPanel1Layout.createSequentialGroup()
@@ -130,7 +136,7 @@ public class Contribute extends javax.swing.JPanel implements ImagePath {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(curvesPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13))
+                            .addComponent(lb_balance))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,11 +172,11 @@ public class Contribute extends javax.swing.JPanel implements ImagePath {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lb_balance;
     private javax.swing.JLabel lb_icon;
     private javax.swing.JLabel lb_separator;
     // End of variables declaration//GEN-END:variables

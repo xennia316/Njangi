@@ -5,11 +5,13 @@
  */
 package com.njangi;
 
-import com.njangi.forms.Borrow;
-import com.njangi.forms.Contribute;
+import com.njangi.forms.AdminProfile;
+import com.njangi.forms.ApproveLoan;
+import com.njangi.forms.ApproveMember;
+import com.njangi.forms.RecoverLoan;
+import com.njangi.forms.RemoveMember;
 import com.njangi.forms.UserProfile;
-import com.njangi.forms.ViewUsers;
-import com.njangi.models.User;
+import com.njangi.models.Admin;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.BorderFactory;
@@ -21,21 +23,27 @@ import com.njangi.statics.Path;
  *
  * @author Admin
  */
-public class UserDashboard extends javax.swing.JFrame implements Path {
-   
-    private User njangiUser;
+public class AdminDashboard extends javax.swing.JFrame implements Path{
+
+    private Admin njangiAdmin;
+    /*Menu Items*/
+    //Profile
+    //Borrow
+    //Contribute
+    //View All members
     
-    public UserDashboard(User u) {
-        this.njangiUser = u;
+    public AdminDashboard(Admin ad) {
+        this.njangiAdmin = ad;
         initComponents();
         setBackground(new Color(0,0,0,0));
         init();
         initIcons();
-        initHeader();
     }
     
-    public void initHeader(){
-        header1.setData(njangiUser.getUserName(), "User");
+    private void setHome(){
+        AdminProfile adProfile = new AdminProfile();
+        adProfile.setData(njangiAdmin.getNjangiCode(), njangiAdmin.getMemberCount(), njangiAdmin.getNjangiName());
+        setForm(adProfile);
     }
     
     private void setForm(JComponent com){
@@ -45,17 +53,18 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
         pn_main.revalidate();
     }
     
-    private void setHome(){
-        UserProfile uProfile = new UserProfile(njangiUser);
-        setForm(uProfile);
-    }
-    
     public final void init(){
         setBackground(new Color(0,0,0,0));
         initMenu();
         initIcons();
         initLogo();
+        initHeader();
         setHome();
+        
+    }
+    
+    public void initHeader(){
+        header1.setData(njangiAdmin.getNjangiName(), "Admin");
     }
     
     public final void initMenu(){
@@ -67,6 +76,8 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
         lb_contribute.setBackground(new Color(0,0,0,0));
         lb_view_text.setBackground(new Color(0,0,0,0));
         lb_view.setBackground(new Color(0,0,0,0));
+        lb_new.setBackground(new Color(0,0,0,0));
+        lb_new_text.setBackground(new Color(0,0,0,0));
     }
 
     public final void initLogo(){
@@ -80,17 +91,20 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
     public final void initIcons(){        
         ImageIcon iProfile = new ImageIcon(PREFIX+"profile.png");
         iProfile = scaleIcon(iProfile);
-        ImageIcon iBorrow = new ImageIcon(PREFIX+"withdraw.png");
+        ImageIcon iBorrow = new ImageIcon(PREFIX+"approve.png");
         iBorrow = scaleIcon(iBorrow);
-        ImageIcon iContribute = new ImageIcon(PREFIX+"deposit.png");
+        ImageIcon iContribute = new ImageIcon(PREFIX+"recover.png");
         iContribute = scaleIcon(iContribute);
-        ImageIcon iView = new ImageIcon(PREFIX+"view.png");
+        ImageIcon iView = new ImageIcon(PREFIX+"member.png");
         iView = scaleIcon(iView);
+        ImageIcon iNew = new ImageIcon(PREFIX+"remove.png");
+        iNew = scaleIcon(iNew);
         
         lb_profile.setIcon(iProfile);
         lb_borrow.setIcon(iBorrow);
         lb_contribute.setIcon(iContribute);
         lb_view.setIcon(iView);
+        lb_new.setIcon(iNew);
     }
     
     public final ImageIcon scaleIcon(ImageIcon i){
@@ -121,6 +135,8 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
         lb_contribute = new javax.swing.JLabel();
         lb_view_text = new javax.swing.JLabel();
         lb_view = new javax.swing.JLabel();
+        lb_new_text = new javax.swing.JLabel();
+        lb_new = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         pn_main = new javax.swing.JPanel();
         header1 = new com.njangi.extra.Header();
@@ -160,7 +176,7 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
 
         lb_borrow_text.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         lb_borrow_text.setForeground(new java.awt.Color(255, 255, 255));
-        lb_borrow_text.setText("Borrow");
+        lb_borrow_text.setText("Approve Loan");
         lb_borrow_text.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lb_borrow_text.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -178,7 +194,7 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
 
         lb_contribute_text.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         lb_contribute_text.setForeground(new java.awt.Color(255, 255, 255));
-        lb_contribute_text.setText("Contribute");
+        lb_contribute_text.setText("Recover Loan");
         lb_contribute_text.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lb_contribute_text.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -196,7 +212,7 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
 
         lb_view_text.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         lb_view_text.setForeground(new java.awt.Color(255, 255, 255));
-        lb_view_text.setText("View Members");
+        lb_view_text.setText("Approve Member");
         lb_view_text.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lb_view_text.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -212,6 +228,24 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
 
         lb_view.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        lb_new_text.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        lb_new_text.setForeground(new java.awt.Color(255, 255, 255));
+        lb_new_text.setText("Remove Member");
+        lb_new_text.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_new_text.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_new_textMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_new_textMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_new_textMouseExited(evt);
+            }
+        });
+
+        lb_new.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout sidebar1Layout = new javax.swing.GroupLayout(sidebar1);
         sidebar1.setLayout(sidebar1Layout);
         sidebar1Layout.setHorizontalGroup(
@@ -225,17 +259,20 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
             .addGroup(sidebar1Layout.createSequentialGroup()
                 .addGroup(sidebar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_borrow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(sidebar1Layout.createSequentialGroup()
-                        .addComponent(lb_view, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 4, Short.MAX_VALUE))
                     .addComponent(lb_contribute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_profile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lb_profile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(sidebar1Layout.createSequentialGroup()
+                        .addGroup(sidebar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_view, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_new, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addGap(12, 12, 12)
                 .addGroup(sidebar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_profile_text, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_contribute_text, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_borrow_text, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_view_text, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                    .addComponent(lb_view_text, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                    .addComponent(lb_new_text, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
                 .addContainerGap())
         );
         sidebar1Layout.setVerticalGroup(
@@ -263,7 +300,11 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
                 .addGroup(sidebar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lb_view, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_view_text, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-                .addGap(0, 305, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(sidebar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lb_new, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_new_text, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                .addGap(0, 271, Short.MAX_VALUE))
         );
 
         jButton1.setBackground(new java.awt.Color(94, 84, 142));
@@ -291,20 +332,19 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
                 .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginBorder1Layout.createSequentialGroup()
                         .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addContainerGap())
-                    .addComponent(pn_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(pn_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         loginBorder1Layout.setVerticalGroup(
             loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sidebar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(loginBorder1Layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(loginBorder1Layout.createSequentialGroup()
-                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addGroup(loginBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pn_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -407,22 +447,50 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
 
     private void lb_borrow_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_borrow_textMouseClicked
         // TODO add your handling code here:
-        Borrow b_form = new Borrow(njangiUser);
+        ApproveLoan b_form = new ApproveLoan(njangiAdmin);
         setForm(b_form);
     }//GEN-LAST:event_lb_borrow_textMouseClicked
 
     private void lb_contribute_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_contribute_textMouseClicked
         // TODO add your handling code here:
-        Contribute c_form = new Contribute(njangiUser);
+        RecoverLoan c_form = new RecoverLoan(njangiAdmin);
         setForm(c_form);
     }//GEN-LAST:event_lb_contribute_textMouseClicked
 
     private void lb_view_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_view_textMouseClicked
         // TODO add your handling code here:
-        ViewUsers v_form = new ViewUsers(njangiUser.getNjangiCode());
+        ApproveMember v_form = new ApproveMember(njangiAdmin);
         setForm(v_form);
     }//GEN-LAST:event_lb_view_textMouseClicked
 
+    private void lb_new_textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_new_textMouseClicked
+        // TODO add your handling code here:
+        RemoveMember r_form = new RemoveMember(njangiAdmin);
+        setForm(r_form);
+        
+    }//GEN-LAST:event_lb_new_textMouseClicked
+
+    private void lb_new_textMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_new_textMouseEntered
+        // TODO add your handling code here:
+        lb_new_text.setOpaque(true);
+        lb_new.setOpaque(true);
+        lb_new_text.setBackground(Color.decode("#5E548E"));
+        lb_new.setBackground(Color.decode("#5E548E"));
+        lb_new.setBorder(BorderFactory.createMatteBorder(0, 6, 0, 0, Color.decode("#9E549D")));
+    }//GEN-LAST:event_lb_new_textMouseEntered
+
+    private void lb_new_textMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_new_textMouseExited
+        // TODO add your handling code here:
+        lb_new_text.setOpaque(false);
+        lb_new.setOpaque(false);
+        initMenu();
+        lb_new_text.setBackground(new Color(0,0,0,0));
+        lb_new.setBorder(BorderFactory.createEmptyBorder());
+    }//GEN-LAST:event_lb_new_textMouseExited
+
+    /**
+     * @param args the command line arguments
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.njangi.extra.Header header1;
@@ -434,6 +502,8 @@ public class UserDashboard extends javax.swing.JFrame implements Path {
     private javax.swing.JLabel lb_contribute;
     private javax.swing.JLabel lb_contribute_text;
     private javax.swing.JLabel lb_icon;
+    private javax.swing.JLabel lb_new;
+    private javax.swing.JLabel lb_new_text;
     private javax.swing.JLabel lb_profile;
     private javax.swing.JLabel lb_profile_text;
     private javax.swing.JLabel lb_view;

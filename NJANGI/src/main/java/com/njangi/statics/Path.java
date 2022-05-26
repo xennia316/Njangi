@@ -9,9 +9,9 @@ package com.njangi.statics;
  *
  * @author Admin
  */
-public interface ImagePath {
-    final String PREFIX = "/home/eddybruv/GitHub/Njangi/NJANGI/src/main/java/com.njangi.images/";
+public interface Path {
+    final String PREFIX = "C:\\Users\\Admin\\Documents\\NetBeansProjects\\NjangiRepo\\NJANGI\\src\\main\\java\\com.njangi.images\\";
     final String USERNAME = "root";
-    final String PASSWORD = "";
-    final String NAME = "Njangi2";
+    final String PASSWORD = "iGetInt0pc.com!";
+    final String NAME = "njangi";
 }
